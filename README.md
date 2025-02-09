@@ -22,3 +22,5 @@ Only one hard mode can be activated on a server, but multiple attributes can be 
 There are no rewards for using a hard mode, its a hard mode for a reason. Take comfort in knowing you achieved something great.
 
 Please note that this module uses Player Settings to store deaths, so please ensure EnablePlayerSettings is set to 1 in your worldserver.conf.
+
+* Credit, This idea was taken from mod-challenge-modes @ https://github.com/ZhengPeiRu21/mod-challenge-modes

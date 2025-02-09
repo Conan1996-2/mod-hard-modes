@@ -15,9 +15,9 @@ This module adds the following attributes when enabled:
 - **XP Rate** - Players receive a percentage of the normal amount of XP, with 1 being 100%.
 - **Quest XP Only** - Players can receive XP only from quests.
 
-Players do not have the ability to enable or disable the hard modes.
+Players do not have the ability to enable or disable the hard modes or attributes.
 
-Multiple  can be activated on a single character as long as they do not conflict, such as Hardcore and Semi-Hardcore.
+Only one hard mode can be activated on a server, but multiple attributes can be activated.
 
 There are no rewards for using a hard mode, its a hard mode for a reason. Take comfort in knowing you achieved something great.
 

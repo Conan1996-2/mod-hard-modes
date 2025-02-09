@@ -1,0 +1,69 @@
+#
+# Copyright (C) 2016+ AzerothCore <www.azerothcore.org>, released under GNU AGPL v3 license: https://github.com/azerothcore/azerothcore-wotlk/blob/master/LICENSE-AGPL3
+#
+
+[worldserver]
+
+########################################
+# Hard Mode Config
+########################################
+#    HardMode.Enable
+#        Description: Enable hard mode.
+#            If set to 0, all modes will be disabled.
+#
+#        Default:    0 - Disabled
+#                    1 - Enabled
+#
+HardMode.Enable = 1
+
+#    HardMode.Mode
+#        Description: What hardmode version the server will be using.
+#		      
+#        Default:    0 - Disabled, no mode selected
+#    		     1 - Hardcore - Players who die are permanently ghosts and can never be revived.
+#            	     2 - SemiHardcore - Players who die lose all worn equipment and carried gold.
+#            	     3 - IronMan - Enforces the Iron Man ruleset (https://wowchallenges.com/challangeinfo/iron-man/)
+#
+HardMode.Mode = 0
+
+#    HardMode.Reset
+#        Description: Resets your death once logged in (have to log in on each character that is dead).
+#		      
+#        Default:    0 - Disabled
+#    		     1 - Enabled
+HardMode.Reset = 0
+
+########################################
+# Attributes to the hard mode Config
+########################################
+#    HardMode.SelfCrafted
+#        Description: Players can only wear equipment that they have crafted.
+#
+#        Default:    0 - Disabled
+#                    1 - Enabled
+#
+HardMode.SelfCrafted = 0
+
+#    HardMode.ItemQualityLevel
+#        Description: Players can only wear equipment that is of Normal or Poor quality.
+#
+#        Default:    0 - Disbled
+#                    1 - Enabled
+#
+HardMode.ItemQualityLevel = 0
+
+#    HardMode.XPGain
+#        Description: how the XP Rate will be effected.
+#
+#        Default:    0 - Rate set by variable XPRate.
+#                    1 - XP gain is by Quest only, all other XP is not counted.
+#
+HardMode.XPGain = 0
+
+#    HardMode.XPRate
+#        Description: When XPGain is set to 1, this will set the rate of XP a player gains.
+#            Example: 1 is normal rate while .5 is half the normal rate and Slow, and .25 is 1/4 the normal rate and very slow.
+#
+#        Default:    1 - Normal Rate
+#
+HardMode.XPRate = 1

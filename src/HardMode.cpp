@@ -27,8 +27,11 @@ private:
             sChallengeModes->serverSelfCraftedEnable      = sConfigMgr->GetOption<bool>("HardMode.SelfCrafted", false);
             sChallengeModes->serverItemQualityLevelEnable = sConfigMgr->GetOption<bool>("HardMode.ItemQualityLevel", false);
             sChallengeModes->serverXPGain                 = sConfigMgr->GetOption<uint32>("HardMode.XPGain", 0);
-            sChallengeModes->serverXPRate                 = sConfigMgr->GetOption<float>("HardMode.XPRate", 1.0f);
-            
+            sChallengeModes->serverXPRate                 = sConfigMgr->GetOption<float>("HardMode.XPRate", 1.0f);            
+            sChallengeModes->serverNumberOfDeaths         = sConfigMgr->GetOption<uint32>("HardMode.NumberOfDeaths", 0);
+            sChallengeModes->serverCurrencyCostToRes      = sConfigMgr->GetOption<uint32>("HardMode.CurrencyCostToRes", 0);
+            sChallengeModes->serverResetDeathOnCurrencyUse= sConfigMgr->GetOption<bool>("HardMode.ResetDeathsOnCurrencyUse", false);
+
             LOG_INFO ("server.loading", sChallengeModes->serverHardMode == 1 ? ">> Server is Hardcore" : 
                 sChallengeModes->serverHardMode == 2 ? ">> Server is Semi-HardCore" : 
                 sChallengeModes->serverHardMode == 3 ? ">> Server is IronMan" : ">> Server Hardcore is disabled");

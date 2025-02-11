@@ -26,8 +26,8 @@ class ChallengeModes {
 public:
     static ChallengeModes* instance();
 
-    bool challengesEnabled, serverReset, serverSelfCraftedEnable, serverItemQualityLevelEnable;
-    uint32 serverHardMode, serverXPGain;
+    bool challengesEnabled, serverReset, serverSelfCraftedEnable, serverItemQualityLevelEnable, serverResetDeathOnCurrencyUse;
+    uint32 serverHardMode, serverXPGain, serverCurrencyCostToRes, serverNumberOfDeaths;
     float serverXPRate;
 
     [[nodiscard]] bool enabled() const { return challengesEnabled; }

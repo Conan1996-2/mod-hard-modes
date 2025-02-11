@@ -67,3 +67,30 @@ HardMode.XPGain = 0
 #        Default:    1 - Normal Rate
 #
 HardMode.XPRate = 1
+
+########################################
+# Death Configuration (Not instantiated yet)
+########################################
+#    HardMode.NumberOfDeaths
+#        Description: How many deaths you can have before its a permanent death.
+#
+#        Default:    1
+#
+HardMode.NumberOfDeaths = 1
+
+#    HardMode.CurrencyCostToRes
+#        Description: How much does it cost to resurect a person.
+#            Example: 5 - You need 5 Currency to resurect
+#
+#        Default:    0 - Disabled
+#
+HardMode.CurrencyCostToRes = 1
+
+#    HardMode.ResetDeathsOnCurrencyUse
+#        Description: Resets the number of times you died to 0 upon currency use.
+#                     A good use for this would be once a person reaches maximum deaths, they will have to use currency to continue ressing.
+#
+#        Default:    0 - Disabled
+#                    1 - Enabled
+#
+HardMode.ResetDeathsOnCurrencyUse = 0

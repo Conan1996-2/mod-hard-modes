@@ -19,7 +19,7 @@ Console Commands that can be used (At any time you can type the command to see w
 * note that some commands are only available to GM or higher level accounts.
   
 - **.hm or .hardmode** - This will access the following mods commands.
-   - **status** - get a printout of you or another player status.
+   - **status** - get a printout of you or [GM Only] another player status.
    - **currency** -
       - **add** - [GM only] currently adds 1 currency to the targeted player.
       - **balance** - Displays yours or [GM only] targeted players balance.

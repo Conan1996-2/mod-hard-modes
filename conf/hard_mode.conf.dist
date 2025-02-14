@@ -27,7 +27,8 @@ HardMode.Enable = 1
 HardMode.Mode = 0
 
 #    HardMode.Reset
-#        Description: Resets your death once logged in (have to log in on each character that is dead).
+#        Description: Resets a death once logged in (have to log in on each character that is dead).
+#            This will also ignore ANY of the following hardmode that is selected when it comes to deaths: Hardcore, SemiHardcore and IronMan.
 #		      
 #        Default:    0 - Disabled
 #    		     1 - Enabled
@@ -53,7 +54,6 @@ HardMode.SelfCrafted = 0
 HardMode.ItemQualityLevel = 0
 
 #    HardMode.XPGain
-#        Description: how the XP Rate will be effected.
 #
 #        Default:    0 - Rate set by variable XPRate.
 #                    1 - XP gain is by Quest only, all other XP is not counted.
@@ -74,9 +74,9 @@ HardMode.XPRate = 1
 #    HardMode.NumberOfDeaths
 #        Description: How many deaths you can have before its a permanent death.
 #
-#        Default:    1
+#        Default:    0
 #
-HardMode.NumberOfDeaths = 1
+HardMode.NumberOfDeaths = 0
 
 #    HardMode.CurrencyCostToRes
 #        Description: How much does it cost to resurect a person.
@@ -88,7 +88,7 @@ HardMode.CurrencyCostToRes = 1
 
 #    HardMode.ResetDeathsOnCurrencyUse
 #        Description: Resets the number of times you died to 0 upon currency use.
-#                     A good use for this would be once a person reaches maximum deaths, they will have to use currency to continue ressing.
+#                     A good use for this would be once a person reaches maximum deaths, they will have to use currency to continue ressing.#
 #
 #        Default:    0 - Disabled
 #                    1 - Enabled

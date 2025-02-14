@@ -1,18 +1,22 @@
-#ifndef AZEROTHCORE_HARDMODES_H
-#define AZEROTHCORE_HARDMODES_H
+#ifndef AZEROTHCORE_HARD_MODE_H
+#define AZEROTHCORE_HARD_MODE_H
 
 #include "ScriptMgr.h"
 #include "Player.h"
 #include "Config.h"
 #include "Chat.h"
-#include "ScriptedCreature.h"
-#include "ScriptedGossip.h"
 #include "SpellMgr.h"
-#include "Item.h"
-#include "ItemTemplate.h"
-#include "GameObjectAI.h"
 #include "Pet.h"
-#include <map>
+#include "Log.h"
+#include "DatabaseEnv.h"
+#include "HardModePlayerData.h"
+
+//#include "ScriptedCreature.h"
+//#include "ScriptedGossip.h"
+//#include "Item.h"
+//#include "ItemTemplate.h"
+//#include "GameObjectAI.h"
+//#include <map>
 
 enum AllowedProfessions
 {
@@ -29,10 +33,10 @@ public:
     bool challengesEnabled, serverReset, serverSelfCraftedEnable, serverItemQualityLevelEnable, serverResetDeathOnCurrencyUse;
     uint32 serverHardMode, serverXPGain, serverCurrencyCostToRes, serverNumberOfDeaths;
     float serverXPRate;
-
+    
     [[nodiscard]] bool enabled() const { return challengesEnabled; }
 };
 
 #define sChallengeModes ChallengeModes::instance()
 
-#endif //AZEROTHCORE_CHALLENGEMODES_H
+#endif //AZEROTHCORE_HARD_MODE_H

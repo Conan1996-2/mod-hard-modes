@@ -13,7 +13,23 @@ This module adds the following attributes when enabled:
 - **Item Quality Level** - Players can only wear equipment that is of Normal or Poor quality.
 - **XP Gain** - Choose if XP will be either a **XP Rate** or **Quest XP Only**.
 - **XP Rate** - Players receive a percentage of the normal amount of XP, with 1 being 100%.
-- **Quest XP Only** - Players can receive XP only from quests.
+- **Quest XP Only** - Players can receive XP only from quests. 
+
+Console Commands that can be used (At any time you can type the command to see whats available):
+* note that some commands are only available to GM or higher level accounts.
+  
+- **.hm or .hardmode** - This will access the following mods commands.
+   - **status** - get a printout of you or another player status.
+   - **currency** -
+      - **add** - [GM only] currently adds 1 currency to the targeted player.
+      - **balance** - Displays yours or [GM only] targeted players balance.
+   - **deaths** - 
+      - **balance** - Displays yours or [GM only] targeted players balance.
+      - **clear** - [GM Only] Erases death count for free and will resurect targeted player if dead.
+      - **resurrect** - [GM Only] Will resurrect the player at the cost of currency.
+   - **reprieves** -
+      - **balance** - Displays yours or [GM only] targeted players balance.
+  
 
 Players do not have the ability to enable or disable the hard modes or attributes.
 
@@ -22,5 +38,9 @@ Only one hard mode can be activated on a server, but multiple attributes can be 
 There are no rewards for using a hard mode, its a hard mode for a reason. Take comfort in knowing you achieved something great.
 
 Please note that this module uses Player Settings to store deaths, so please ensure EnablePlayerSettings is set to 1 in your worldserver.conf.
+
+
+
+
 
 * Credit, This idea was taken from mod-challenge-modes @ https://github.com/ZhengPeiRu21/mod-challenge-modes

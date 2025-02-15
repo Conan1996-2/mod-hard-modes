@@ -6,6 +6,7 @@ This module adds the following hard modes:
 - **Hardcore** - Players who die are permanently ghosts and can never be revived^.
 - **Semi-Hardcore** - Players who die lose all worn equipment and carried gold.
 - **Iron Man Mode** - Enforces the [Iron Man Ruleset](https://wowchallenges.com/challangeinfo/iron-man/)^
+
 ^ - Players can be revived if they have whats called currency/token. Tokens can be given by a GM or via web interface and added to the database table.
     Number of deaths can also be configured in the .conf file (default 0) before use of the currency/token is needed to res.
 

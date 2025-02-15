@@ -19,10 +19,13 @@ Console Commands that can be used (At any time you can type the command to see w
 * note that some commands are only available to GM or higher level accounts.
   
 - **.hm or .hardmode** - This will access the following mods commands.
-   - **status** - get a printout of you or [GM Only] another player status.
+   - **status** - get a printout of you or [GM Only] another player status (player currency, total account currency, deaths, reprieves).
    - **currency** -
       - **add** - [GM only] currently adds 1 currency to the targeted player.
+      - **account** -
+         - **balance** - Displays your account total (all players on this account) or [GM only] targeted players total account balance.
       - **balance** - Displays yours or [GM only] targeted players balance.
+      - **resurrect** - Will resurrect the current player who invokes this command, using your account (not player) currency.
    - **deaths** - 
       - **balance** - Displays yours or [GM only] targeted players balance.
       - **clear** - [GM Only] Erases death count for free and will resurect targeted player if dead.

@@ -11,12 +11,13 @@ public:
     
     void Insert (Player* player, uint32 deaths, uint32 reprieves, uint32 currency);
     uint32 GetDeaths (Player* player);
-    void AddDeath (Player* player, uint32 deaths);
+    void AddDeath (Player* player, int32 deaths);
     void Died (Player* player);
     uint32 GetReprieves (Player* player);
     void AddReprieve (Player* player);
     uint32 GetCurrency (Player* player);
-    void AddCurrency (Player* player, uint32 amountToAdd);    
+    uint32 GetAccountCurrency(Player* player);
+    void AddCurrency (Player* player, int32 amountToAdd);    
     bool CanPlay (Player* player, uint32 maxDeaths);
     bool CanPurchaseResurrect (Player* player, uint32 numberCurrency);
     void PurchaseResurrect(Player* player, uint32 numberCurrency, bool resetDeaths);

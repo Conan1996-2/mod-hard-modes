@@ -209,9 +209,15 @@ public:
     HardModeCommand() : CommandScript("HardModeCommand") {}
 
     ChatCommandTable GetCommands() const override {
+        static ChatCommandTable AccountCommandTable = {
+            {"balance", HandleCurrencyAccountCountCommand, SEC_PLAYER, Console::Yes},
+        };
+        
         static ChatCommandTable CurrencyCommandTable = {
+            {"account", AccountCommandTable},
             {"add", HandleCurrencyAddCommand, SEC_GAMEMASTER, Console::Yes},
             {"balance", HandleCurrencyCountCommand, SEC_PLAYER, Console::Yes},
+            {"resurrect", HandleCurrencyReserrectCommand, SEC_PLAYER, Console::Yes},
         };
         
         static ChatCommandTable DeathCommandTable = {
@@ -264,6 +270,17 @@ public:
         return true;
     }
     
+    static bool HandleCurrencyAccountCountCommand(ChatHandler* handler) {
+        Player* player = handler->GetPlayer();
+        Player* target = player->GetSelectedPlayer();
+        
+        if (!player) return false;        
+        if (player->GetSession()->GetSecurity() <= SEC_PLAYER || !target) target = player;
+        if (player->IsInCombat()) return InCombat (handler);
+        ChatHandler(player->GetSession()).PSendSysMessage("Player {} account has total {} currency.", target->GetName(), sPlayerData->GetAccountCurrency(target));
+        return true;
+    }
+    
     static bool HandleDeathCountCommand(ChatHandler* handler) {
         Player* player = handler->GetPlayer();
         Player* target = player->GetSelectedPlayer();
@@ -294,6 +311,7 @@ public:
         if (player->GetSession()->GetSecurity() <= SEC_PLAYER || !target) target = player;
         if (player->IsInCombat()) return InCombat (handler);
         HandleCurrencyCountCommand(handler);
+        HandleCurrencyAccountCountCommand(handler);
         HandleDeathCountCommand(handler);
         HandleReprieveCountCommand(handler);
         return true;
@@ -324,7 +342,18 @@ public:
         ChatHandler(player->GetSession()).PSendSysMessage("Clearing all Deaths free of cost for {}!", target->GetName());
         ChatHandler(target->GetSession()).PSendSysMessage("Your Deaths have been erased, free of charge!");
         sPlayerData->PurchaseResurrect(target, 0, true);
-        if (!target->IsAlive()) target->ResurrectPlayer(0, false);
+        if (!target->IsAlive()) target->ResurrectPlayer(1, false);
+        return true;
+    }
+    
+    static bool HandleCurrencyReserrectCommand (ChatHandler* handler) {
+        Player* player = handler->GetPlayer();
+        
+        if (!player) return false;
+        if (player->IsAlive()) return SendMessage(handler, "You can't use this command on players that are alive!");
+        if (!sPlayerData->CanPurchaseResurrect(player, sChallengeModes->serverCurrencyCostToRes)) return SendMessage(handler, "You do not have enough currency to resurrect.");
+        sPlayerData->PurchaseResurrect(player, sChallengeModes->serverCurrencyCostToRes, sChallengeModes->serverResetDeathOnCurrencyUse);
+        player->ResurrectPlayer(1, false);
         return true;
     }
     

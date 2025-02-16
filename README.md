@@ -20,11 +20,12 @@ This module adds the following attributes when enabled:
 
 Console Commands that can be used (At any time you can type the command to see whats available):
 * note that some commands are only available to GM or higher level accounts.
+* When dead, use the /guild channel to use the commands (works even when you're not in a guild). This gets around the "can't chat when dead" issue.
   
 - **.hm or .hardmode** - This will access the following mods commands.
    - **status** - get a printout of you or [GM Only] targeted players status (player currency, total account currency, deaths, reprieves).
    - **currency** -
-      - **add** - [GM only] currently adds 1 currency to the targeted player.
+      - **add #** - [GM only] currently adds # currency to the targeted player. # can be a negative (-) to remove currency from the account.
       - **account** -
          - **balance** - Displays your account total (all players on this account) or [GM only] targeted players total account balance.
       - **balance** - Displays yours or [GM only] targeted players balance.
@@ -41,11 +42,5 @@ Players do not have the ability to enable or disable the hard modes or attribute
 Only one hard mode can be activated on a server, but multiple attributes can be activated.
 
 There are no rewards for using a hard mode, its a hard mode for a reason. Take comfort in knowing you achieved something great.
-
-Please note that this module uses Player Settings to store deaths, so please ensure EnablePlayerSettings is set to 1 in your worldserver.conf.
-
-
-
-
 
 * Credit, This idea was taken from mod-challenge-modes @ https://github.com/ZhengPeiRu21/mod-challenge-modes

@@ -2,10 +2,6 @@
  * Copyright (C) 2016+ AzerothCore <www.azerothcore.org>, released under GNU AGPL v3 license: https://github.com/azerothcore/azerothcore-wotlk/blob/master/LICENSE-AGPL3
  */
 
-//    QueryResult result = CharacterDatabase.Query("SELECT id FROM auctionhouse WHERE itemowner<>{} AND buyguid<>{}", _id, _id);
-//    CharacterDatabase.Execute("UPDATE auctionhouse SET buyguid = '{}', lastbid = '{}' WHERE id = '{}'", auction->bidder.GetCounter(), auction->bid, auction->Id);
-
-
 #include "HardMode.h"
 
 ChallengeModes* ChallengeModes::instance() {
@@ -49,7 +45,6 @@ private:
 
 class HardMode : public PlayerScript {
     private:
-        //uint32 HARDCORE_DEAD = 0;
 
     public:
         explicit HardMode() : PlayerScript("HardMode") {}
@@ -107,7 +102,7 @@ class HardMode : public PlayerScript {
         if (sChallengeModes->enabled()) {
             if (sChallengeModes->serverReset) return;
             if (sChallengeModes->serverHardMode == 1 || sChallengeModes->serverHardMode == 3) sPlayerData->Died(killed);
-            else if (sChallengeModes->serverHardMode == 2) { // Semi Hard Mode
+            else if (sChallengeModes->serverHardMode == 2) {
 		        for (uint8 i = 0; i < EQUIPMENT_SLOT_END; ++i) {
 		            if (Item* pItem = killed->GetItemByPos(INVENTORY_SLOT_BAG_0, i)) {
 		                if (pItem->GetTemplate() && !pItem->IsEquipped()) continue;
@@ -162,9 +157,7 @@ class HardMode : public PlayerScript {
 
     bool CanUseItem(Player* /*player*/, ItemTemplate const* proto, InventoryResult& /*result*/) override {
         if (sChallengeModes->serverHardMode == 3) {
-            // Do not allow using elixir, potion, or flask
             if (proto->Class == ITEM_CLASS_CONSUMABLE && (proto->SubClass == ITEM_SUBCLASS_POTION || proto->SubClass == ITEM_SUBCLASS_ELIXIR || proto->SubClass == ITEM_SUBCLASS_FLASK)) return false;
-            // Do not allow food that gives food buffs
             if (proto->Class == ITEM_CLASS_CONSUMABLE && proto->SubClass == ITEM_SUBCLASS_FOOD) {
                 for (const auto & Spell : proto->Spells) {
                     SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(Spell.SpellId);
@@ -217,13 +210,12 @@ public:
             {"account", AccountCommandTable},
             {"add", HandleCurrencyAddCommand, SEC_GAMEMASTER, Console::Yes},
             {"balance", HandleCurrencyCountCommand, SEC_PLAYER, Console::Yes},
-            {"resurrect", HandleCurrencyReserrectCommand, SEC_PLAYER, Console::Yes},
         };
         
         static ChatCommandTable DeathCommandTable = {
             {"balance", HandleDeathCountCommand, SEC_PLAYER, Console::Yes},
             {"clear", HandleDeathClearCommand, SEC_GAMEMASTER, Console::Yes},
-            {"resurrect", HandleResurrectCommand, SEC_GAMEMASTER, Console::Yes},
+            {"resurrect", HandleResurrectCommand, SEC_PLAYER, Console::Yes},
         };
         
         static ChatCommandTable ReprieveCommandTable = {
@@ -317,16 +309,22 @@ public:
         return true;
     }
     
-    static bool HandleCurrencyAddCommand(ChatHandler* handler) {
+    static bool HandleCurrencyAddCommand(ChatHandler* handler, const char* args) {
         Player* player = handler->GetPlayer();
         Player* target = player->GetSelectedPlayer();
-        uint32 currencyToAdd = 1; // eventualy there will have a command line parameter to change this
+        int32 currencyToAdd = 1; // eventualy there will have a command line parameter to change this
         
         if (!player) return false;
         if (!target) return NotAValidTarget (handler);
         if (player->IsInCombat()) return InCombat (handler);
+
+        char* opt = strtok((char*)args, " ");
+        if (opt) {
+            int32 amount = strtol(opt, NULL, 10);
+             if (amount != 0) currencyToAdd = amount;
+        }
         ChatHandler(player->GetSession()).PSendSysMessage("Adding {} currency to player {}", currencyToAdd, target->GetName());
-        ChatHandler(target->GetSession()).PSendSysMessage("You just had {} currency added to your account.", currencyToAdd);
+        if (target != player)  ChatHandler(target->GetSession()).PSendSysMessage("You just had {} currency added to your account.", currencyToAdd);
         sPlayerData->AddCurrency (target, currencyToAdd);
         return true;
     }
@@ -346,28 +344,19 @@ public:
         return true;
     }
     
-    static bool HandleCurrencyReserrectCommand (ChatHandler* handler) {
-        Player* player = handler->GetPlayer();
-        
-        if (!player) return false;
-        if (player->IsAlive()) return SendMessage(handler, "You can't use this command on players that are alive!");
-        if (!sPlayerData->CanPurchaseResurrect(player, sChallengeModes->serverCurrencyCostToRes)) return SendMessage(handler, "You do not have enough currency to resurrect.");
-        sPlayerData->PurchaseResurrect(player, sChallengeModes->serverCurrencyCostToRes, sChallengeModes->serverResetDeathOnCurrencyUse);
-        player->ResurrectPlayer(1, false);
-        return true;
-    }
-    
     static bool HandleResurrectCommand(ChatHandler* handler) {
         Player* player = handler->GetPlayer();
         Player* target = player->GetSelectedPlayer();
         
         if (!player) return false;
-        if (!target) return NotAValidTarget (handler);
+        if (player->GetSession()->GetSecurity() <= SEC_PLAYER || !target) target = player;
         if (player->IsInCombat()) return InCombat (handler);
         if (target->IsAlive()) return SendMessage(handler, "You can't use this command on players that are alive!");
         if (!sPlayerData->CanPurchaseResurrect(target, sChallengeModes->serverCurrencyCostToRes)) return SendMessage(handler, "Player does not have enough currency to resurrect. You could do a free clearing of deaths.");        
-        ChatHandler(player->GetSession()).PSendSysMessage("Resurrecting: {}! Removed currency {}", target->GetName(), sChallengeModes->serverCurrencyCostToRes);
-        ChatHandler(target->GetSession()).PSendSysMessage("You have been resurrected! Currency cost was {}", sChallengeModes->serverCurrencyCostToRes);
+        if (target != player) {
+            ChatHandler(player->GetSession()).PSendSysMessage("Resurrecting: {}! Removed {} currency from them", target->GetName(), sChallengeModes->serverCurrencyCostToRes);
+            ChatHandler(target->GetSession()).PSendSysMessage("You have been resurrected for {} Currency", sChallengeModes->serverCurrencyCostToRes);
+        }
         sPlayerData->PurchaseResurrect(target, sChallengeModes->serverCurrencyCostToRes, sChallengeModes->serverResetDeathOnCurrencyUse);
         target->ResurrectPlayer(0, false);        
         return true;
@@ -383,4 +372,3 @@ void AddHardModeScripts()
     new PlayerData();
     new HardModeCommand();
 }
-

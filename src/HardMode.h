@@ -11,13 +11,6 @@
 #include "DatabaseEnv.h"
 #include "HardModePlayerData.h"
 
-//#include "ScriptedCreature.h"
-//#include "ScriptedGossip.h"
-//#include "Item.h"
-//#include "ItemTemplate.h"
-//#include "GameObjectAI.h"
-//#include <map>
-
 enum AllowedProfessions
 {
     RUNEFORGING    = 53428,

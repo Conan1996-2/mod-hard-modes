@@ -85,7 +85,7 @@ void PlayerData::AddCurrency(Player* player, int32 amountToAdd) {
         if (!result || result->GetRowCount() == 0) Insert(player, 0, 0, 0);
         else do {
             Field* fields = result->Fetch();
-            uint32 amount = fields[1].Get <uint32> ();
+            int32 amount = fields[1].Get <int32> ();
             if (amount > 0) {
                 CharacterDatabase.Query("UPDATE mod_hard_modes SET currency='{}' WHERE GUID={}", amount + amountToAdd < 0 ? 0 : amount + amountToAdd, fields[0].Get <uint32> ());
                 amountToAdd += amount;

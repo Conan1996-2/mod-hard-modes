@@ -3,12 +3,12 @@
  */
 
 // From SC
-void AddSC_mod_challenge_modes();
+void AddHardModeScripts();
 
 // Add all
 // cf. the naming convention https://github.com/azerothcore/azerothcore-wotlk/blob/master/doc/changelog/master.md#how-to-upgrade-4
 // additionally replace all '-' in the module folder name with '_' here
 void Addmod_hard_modesScripts()
 {
-    AddSC_mod_challenge_modes();
+    AddHardModeScripts();
 }

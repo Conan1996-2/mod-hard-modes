@@ -49,7 +49,7 @@ class HardMode : public PlayerScript {
     public:
         explicit HardMode() : PlayerScript("HardMode") {}
 
-    void OnLogin(Player* player) override {
+    void OnPlayerLogin(Player* player) override {
         if (sChallengeModes->enabled()) {
             if (sChallengeModes->serverHardMode == 1) ChatHandler(player->GetSession()).PSendSysMessage("Server wide Hard mode is Enabled, All deaths are permanent.");
             if (sChallengeModes->serverHardMode == 2) ChatHandler(player->GetSession()).PSendSysMessage("Server wide Semi-Hard mode is Enabled, Equiped equipment and all money is lost on death.");
@@ -89,7 +89,7 @@ class HardMode : public PlayerScript {
         }
     }
 
-    void OnPVPKill(Player* /*killer*/, Player* killed) override {
+    void OnPlayerPVPKill(Player* /*killer*/, Player* killed) override {
         ChatHandler(killed->GetSession()).PSendSysMessage("Death by pvp.");
         if (sChallengeModes->enabled()) {
             if (sChallengeModes->serverReset) return;
@@ -116,7 +116,7 @@ class HardMode : public PlayerScript {
         }
     }
 
-    bool CanEquipItem(Player* player, uint8 /*slot*/, uint16& /*dest*/, Item* pItem, bool /*swap*/, bool /*not_loading*/) override {
+    bool OnPlayerCanEquipItem(Player* player, uint8 /*slot*/, uint16& /*dest*/, Item* pItem, bool /*swap*/, bool /*not_loading*/) override {
         bool useable = true;
         if (sChallengeModes->enabled()) {
             if (sChallengeModes->serverItemQualityLevelEnable || sChallengeModes->serverHardMode == 3) useable &= pItem->GetTemplate()->Quality <= ITEM_QUALITY_NORMAL;
@@ -128,15 +128,15 @@ class HardMode : public PlayerScript {
         return useable;
     }
    
-    void OnLevelChanged(Player* player, uint8 /*oldlevel*/) override {
+    void OnPlayerLevelChanged(Player* player, uint8 /*oldlevel*/) override {
         if (sChallengeModes->enabled() && sChallengeModes->serverHardMode == 3) player->SetFreeTalentPoints(0);
     }
 
-    void OnTalentsReset(Player* player, bool /*noCost*/) override {
+    void OnPlayerTalentsReset(Player* player, bool /*noCost*/) override {
         if (sChallengeModes->enabled() && sChallengeModes->serverHardMode == 3) player->SetFreeTalentPoints(0);
     }
 
-    void OnLearnSpell(Player* player, uint32 spellID) override {
+    void OnPlayerLearnSpell(Player* player, uint32 spellID) override {
         if (sChallengeModes->serverHardMode == 3) {
             switch (spellID) {
                 case RUNEFORGING:
@@ -155,7 +155,7 @@ class HardMode : public PlayerScript {
         }
     }
 
-    bool CanUseItem(Player* /*player*/, ItemTemplate const* proto, InventoryResult& /*result*/) override {
+    bool OnPlayerCanUseItem(Player* /*player*/, ItemTemplate const* proto, InventoryResult& /*result*/) override {
         if (sChallengeModes->serverHardMode == 3) {
             if (proto->Class == ITEM_CLASS_CONSUMABLE && (proto->SubClass == ITEM_SUBCLASS_POTION || proto->SubClass == ITEM_SUBCLASS_ELIXIR || proto->SubClass == ITEM_SUBCLASS_FLASK)) return false;
             if (proto->Class == ITEM_CLASS_CONSUMABLE && proto->SubClass == ITEM_SUBCLASS_FOOD) {
@@ -171,19 +171,19 @@ class HardMode : public PlayerScript {
         return true;
     }
 
-    bool CanApplyEnchantment(Player* /*player*/, Item* /*item*/, EnchantmentSlot /*slot*/, bool /*apply*/, bool /*apply_dur*/, bool /*ignore_condition*/) override {
+    bool OnPlayerCanApplyEnchantment(Player* /*player*/, Item* /*item*/, EnchantmentSlot /*slot*/, bool /*apply*/, bool /*apply_dur*/, bool /*ignore_condition*/) override {
         return sChallengeModes->serverHardMode != 3;
     }
 
-    bool CanGroupInvite(Player* /*player*/, std::string& /*membername*/) override {
+    bool OnPlayerCanGroupInvite(Player* /*player*/, std::string& /*membername*/) override {
         return sChallengeModes->serverHardMode != 3;
     }
 
-    bool CanGroupAccept(Player* /*player*/, Group* /*group*/) override {
+    bool OnPlayerCanGroupAccept(Player* /*player*/, Group* /*group*/) override {
         return sChallengeModes->serverHardMode != 3;
     }
 
-    void OnGiveXP(Player* player, uint32& amount, Unit* victim, uint8 xpSource) override {
+    void OnPlayerGiveXP(Player* player, uint32& amount, Unit* victim, uint8 xpSource) override {
         if (sChallengeModes->enabled()) {
             if (sChallengeModes->serverXPGain == 0) amount *= sChallengeModes->serverXPRate;
             else if (sChallengeModes->serverXPGain == 1 && victim) {

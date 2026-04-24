@@ -79,7 +79,7 @@ class HardMode : public PlayerScript {
         }
     }
     
-    void OnPlayerResurrect(Player* player, float /*restore_percent*/, bool /*applySickness*/) override {
+    void OnPlayerResurrect(Player* player, float /*restore_percent*/, bool& /*applySickness*/) override {
         if (sChallengeModes->enabled()) {
             if (sChallengeModes->serverReset) return;
             if ((sChallengeModes->serverHardMode == 1 || sChallengeModes->serverHardMode == 3) && !sPlayerData->CanPlay(player, sChallengeModes->serverNumberOfDeaths)) {
